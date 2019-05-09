@@ -1,0 +1,149 @@
+---
+title: 'Lab3: Normalization'
+author: "Saman Zahid(samza595) & Rabnawaz Jansher(rabsh696)"
+date: "08/12/2018"
+output: pdf_document
+---
+
+## Question 1 
+Consider the relation schema R(A, B, C, D, E, F) and the set of functional dependencies F = { FD1: A → BC; FD2: C → AD; FD3: DE → F }. Use the Armstrong rules to derive each of the following two functional dependencies. In both cases, describe the derivation process step by step (i.e., which rule did you apply to which FDs).
+
+
+a) C → B 
+
+
+$$FD4: ~~~~ AD \rightarrow BCD ~~~~~~~ Augmentation~~~~ FD1$$
+$$FD5: ~~~~ C \rightarrow BCD ~~~~~~~ Transitivity~~~~ FD2~~and~~FD4$$
+$$FD6: ~~~~ C \rightarrow BC ~~~~~~~ Decomposition~~~~ FD5$$
+$$FD7: ~~~~ C \rightarrow B ~~~~~~~ Decomposition~~~~ FD6$$
+
+
+b) AE → F
+
+$$FD4: ~~~~ AE \rightarrow BCE ~~~~~~~ Augmentation~~~~ FD1$$
+$$FD5: ~~~~ CE \rightarrow ADE ~~~~~~~ Augmentation~~~~ FD2$$
+$$FD6: ~~~~ ADE \rightarrow FA ~~~~~~~ Augmentation~~~~ FD3$$
+$$FD7: ~~~~ CE \rightarrow FA ~~~~~~~ Transitivity~~~~ FD5~~and~~FD6$$
+$$FD8: ~~~~ BCE \rightarrow BFA ~~~~~~~ Augmentation~~~~ FD7$$
+$$FD9: ~~~~ AE \rightarrow BFA ~~~~~~~ Transitivity~~~~ FD4~~and~~FD8$$
+$$FD10: ~~~~ AE \rightarrow FA ~~~~~~~ Decomposition~~~~ FD9$$
+$$FD11: ~~~~ AE \rightarrow F ~~~~~~~ Decomposition~~~~ FD10$$
+
+
+
+## Question 2
+For the aforementioned relation schema with its functional dependencies, compute the attribute closure $X^+$ for each of the following two sets of attributes.
+
+
+a) X = { A } 
+
+
+$$X^+ = \{ A \}$$
+$$X^+ = \{ ABC \} ~~~~ using~~~FD1 : A \rightarrow BC$$
+$$X^+ = \{ ABCD \} ~~~~ using~~~FD2 : C \rightarrow AD$$
+$$X^+ = \{ ABCD \} ~~~~ using~~~FD3 : DE \rightarrow F$$
+
+b) X = { C, E }
+
+$$X^+ = \{ CE \}$$
+$$X^+ = \{ CEAD \} ~~~~ using~~~FD2 : C \rightarrow AD$$
+$$X^+ = \{ CEADF \} ~~~~ using~~~FD3 : DE \rightarrow F$$
+$$X^+ = \{ ABCDEF \} ~~~~ using~~~FD1 : A \rightarrow BC$$
+
+
+## Question 3 
+Consider the relation schema R(A, B, C, D, E, F) with the following FDs
+
+FD1: AB → CDEF \newline
+FD2: E → F \newline
+FD3: D → B \newline
+
+The elements which are on left side but not on right side we can remove those from relation R
+
+__a) Determine the candidate key(s) for R__
+
+$$X = \{ ABDE\} ,~~~~~~~~~~~~ X=\{ABD\}$$
+$$X = \{ ABE\}, ~~~~~~~~~~~~ X=\{ADE\}$$
+$$X = \{ AB\} ,~~~~~~~~~~~~ X=\{AD\}$$
+$$X = \{ AE\} ,~~~~~~~~~~~~ X=\{A\}$$
+
+1. $X^+ = \{A\}$
+\newline
+2. $X^+ = \{AE\}$
+    + $X^+ = \{AE\} ~~~FD1: AB \rightarrow CDEF$
+    + $X^+ = \{AEF\} ~~~FD2: E \rightarrow F$
+    + $X^+ = \{AEF\} ~~~FD3: D \rightarrow B$
+\newline
+3. $X^+ = \{AD\}$
+    + $X^+ = \{ADB\} ~~~FD3: D \rightarrow B$
+    + $X^+ = \{ADBCEF\} ~~~FD1: AB \rightarrow CDEF$
+    + $X^+ = \{ADBCEF\}$
+\newline
+4. $X^+ = \{AB\}$
+    + $X^+ = \{ABCDEF\} ~~~FD1: AB \rightarrow CDEF$
+    + $X^+ = \{ADBCEF\} ~~~FD2: E \rightarrow F$
+    + $X^+ = \{ADBCEF\} ~~~FD3: D \rightarrow B$
+\newline
+
+So $Ck = \{AB,AD\}$ are minimal candidate key.
+
+
+__b) Note that R is not in BCNF. Which FD(s) violate the BCNF condition?__
+
+R is not in BCNF $FD2$ and $DF2$ violates BCNF condition.
+
+__c) Decompose R into a set of BCNF relations, and describe the process step by step (don't forget to determine the FDs and the candidate key(s) for all of the relation schemas along the way).__
+
+
+$D \rightarrow B$  violate BCNF condition we decompose 
+
+R3(DB) with  FD3 : $ck=\{D\}$
+\newline
+R4(ACDE) with  FD7 : $AD \rightarrow \{CE\}$ $ck=\{AD\}$
+
+
+
+where new FDs is formed 
+$$FD4: ~~~~ AD \rightarrow AB ~~~~~~~ Augmentation~~~~ FD3$$
+$$FD5: ~~~~ AD \rightarrow CDEF ~~~~~~~ Transitivity~~~~ FD1~~and~~FD4$$
+$$FD6: ~~~~ AD \rightarrow CDE ~~~~~~~ Decomposition~~~~ FD5$$
+$$FD7: ~~~~ AD \rightarrow CE ~~~~~~~ Decomposition~~~~ FD6$$
+
+
+## Question 4
+Consider the relation schema R(A, B, C, D, E) with the following FDs
+
+FD1: ABC → DE \newline
+FD2: BCD → AE \newline
+FD3: C → D \newline
+
+
+
+__a) Show that R is not in BCNF.__
+
+
+The elements which are on left side but not on right side we can remove those from relation R.
+
+
+
+$$X = \{ ABCD\} ,~~~~~~~~~~~~ X=\{ABC\}$$
+$$X = \{ BCD\} ,~~~~~~~~~~~~ X=\{BC\}$$
+
+
+1. $X^+ = \{BC\}$
+    + $X^+ = \{BCD\} ~~~FD1: C \rightarrow D$
+    + $X^+ = \{BCDAE\} ~~~FD2: BCD \rightarrow AE$
+    + $ck = \{BC\}$
+\newline
+
+
+So $Ck = \{BC\}$ are minimal candidate key and relation FD3 violates the BCNF.
+
+
+__b) Decompose R into a set of BCNF relations (describe the process step by step).__
+
+R2(CD) with $FD3: C \rightarrow D ~~~ ck = \{C\}$
+\newline
+R3(ABCE) with $FD4: BC \rightarrow AE (using~~pesduo-transitivty on~FD2~and~FD3)$ $FD5: ABC \rightarrow E~~ Decomposition~of~~FD1$ \newline \newline
+$ck=\{ BC \}$
+
