@@ -10,7 +10,8 @@ The Jonson Brothers’ business is expanding and the database is continuously be
 The purpose of this lab is to arrive at an understanding of 
 * The Armstrong rules for deriving functional dependencies.
 * The attribute closure algorithm.
-* The BoyceCodd normal form (BCNF), and iv) the BCNF decomposition algorithm.
+* The BoyceCodd normal form (BCNF).
+* The BCNF decomposition algorithm.
 
 ## Lab 4
 The objectives of this lab are to learn how to implement a database, get some hands on experience of MySQL procedures and more experience of basic MySQL queries learnt in previous labs.
